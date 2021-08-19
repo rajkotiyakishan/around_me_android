@@ -4,4 +4,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="list">List</string>
     <string name="map">Map</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="ok">Ok</string>
+    <string name="dont_allow">Don\'t Allow</string>
+    <string name="allow">Allow</string>
+    <string name="read_location">Please Allow Location Permission</string>
+    <string name="settings">Setting</string>
+    <string name="cancel">Cancel</string>
+    <string name="open_now">Open Now</string>
+    <string name="closed_now">Closed Now</string>
 </resources>

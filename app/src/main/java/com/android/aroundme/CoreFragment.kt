@@ -51,7 +51,7 @@ abstract class CoreFragment< DB : ViewDataBinding> : androidx.fragment.app.Fragm
     fun getBinding(): DB = binding
 
 
-   /* protected fun requestPermissionsIfRequired(permissions: ArrayList<String>, permissionCallBack: PermissionCallBack?) {
+    protected fun requestPermissionsIfRequired(permissions: ArrayList<String>, permissionCallBack: PermissionCallBack?) {
         this.permissionCallBack = permissionCallBack
         if (checkSelfPermissions(permissions)) {
             permissionCallBack?.permissionGranted()
@@ -75,7 +75,7 @@ abstract class CoreFragment< DB : ViewDataBinding> : androidx.fragment.app.Fragm
                 }
             }
         }
-    }*/
+    }
 
     @Deprecated("This method should not use with onBackPressedDispatcher", ReplaceWith("onBack(steps)"))
     protected fun onBack() {

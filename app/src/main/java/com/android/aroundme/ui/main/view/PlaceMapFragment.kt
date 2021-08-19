@@ -1,6 +1,7 @@
 package com.android.aroundme.ui.main.view
 
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -38,15 +39,18 @@ class PlaceMapFragment : CoreFragment<FragmentPlaceMapBinding>() {
         mainViewModel?.users?.observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
+                    getBinding().progressBar.visibility = View.GONE
                     it.data?.let { list ->
 
                     }
 
                 }
                 Status.LOADING -> {
+                    getBinding().progressBar.visibility = View.VISIBLE
 
                 }
                 Status.ERROR -> {
+                    getBinding().progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                 }
             }
@@ -56,7 +60,6 @@ class PlaceMapFragment : CoreFragment<FragmentPlaceMapBinding>() {
 
 
     companion object {
-
         @JvmStatic
         fun newInstance() =
             PlaceMapFragment().apply {

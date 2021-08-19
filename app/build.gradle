@@ -18,6 +18,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', 'BASE_URL', "\"https://maps.googleapis.com/maps/api/\""
+        buildConfigField 'String', 'PLACE_API_KEY', "\"AIzaSyDbPkKDfVX8qUoyn7NR57fhuQhspM6LIjs\""
     }
 
     buildTypes {

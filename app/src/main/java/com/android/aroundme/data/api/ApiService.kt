@@ -14,7 +14,7 @@ interface ApiService {
         @Query("radius") radius: String? = "10000",
         @Query("type") type: String? = "restaurant",
         @Query("keyword") keyword: String?="cruise",
-        @Query("key") key: String? = "AIzaSyDbPkKDfVX8qUoyn7NR57fhuQhspM6LIjs",
+        @Query("key") key: String? = BuildConfig.PLACE_API_KEY,
     ): Response<PlaceData>
 
 }

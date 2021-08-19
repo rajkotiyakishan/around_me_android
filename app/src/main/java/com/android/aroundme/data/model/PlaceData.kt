@@ -1,5 +1,6 @@
 package com.android.aroundme.data.model
 
+import com.android.aroundme.BuildConfig
 import com.google.gson.annotations.SerializedName
 
 
@@ -18,7 +19,10 @@ data class Places(
     val geometry: Geometry ,
 
     @SerializedName("icon")
-    val icon: String,
+    val icon: String ,
+
+    @SerializedName("photos")
+    val photos: ArrayList<Photos>,
 
     @SerializedName("icon_background_color")
     val icon_background_color: String,
@@ -41,7 +45,10 @@ data class Places(
     @SerializedName("vicinity")
     val vicinity: String
 
-)
+){
+    val ratings: Float
+        get() = rating.toFloat()
+}
 
 data class Geometry(
 
@@ -66,3 +73,15 @@ data class OpeningHours(
     @SerializedName("open_now")
     val open_now: Boolean
 )
+
+data class Photos(
+    @SerializedName("photo_reference")
+    val photo_reference: String
+){
+    val placeImage : String
+       get() = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=$photo_reference&sensor=false&key=${BuildConfig.PLACE_API_KEY}"
+
+
+}
+
+

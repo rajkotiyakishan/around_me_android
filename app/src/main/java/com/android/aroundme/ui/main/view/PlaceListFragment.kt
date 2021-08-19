@@ -1,20 +1,25 @@
 package com.android.aroundme.ui.main.view
 
-import android.util.Log
+import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.android.aroundme.CoreFragment
 import com.android.aroundme.R
+import com.android.aroundme.data.model.Places
 import com.android.aroundme.databinding.FragmentPlaceListBinding
+import com.android.aroundme.databinding.RowPlaceListBinding
 import com.android.aroundme.ui.main.viewmodel.MainViewModel
 import com.android.aroundme.utils.Status
+import com.android.aroundme.utils.adapter.setUpRecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+
 
 @AndroidEntryPoint
 class PlaceListFragment : CoreFragment<FragmentPlaceListBinding>() {
-     var  mainViewModel : MainViewModel? = null
+    var mainViewModel: MainViewModel? = null
 
 
     override fun getLayout(): Int {
@@ -40,19 +45,40 @@ class PlaceListFragment : CoreFragment<FragmentPlaceListBinding>() {
         mainViewModel?.users?.observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
+                    getBinding().progressBar.visibility = View.GONE
                     it.data?.let { list ->
-
+                        setPlaceList(list)
                     }
 
                 }
                 Status.LOADING -> {
+                    getBinding().progressBar.visibility = View.VISIBLE
 
                 }
                 Status.ERROR -> {
+                    getBinding().progressBar.visibility = View.GONE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+
                 }
             }
         })
+    }
+
+    private fun setPlaceList(list: List<Places>) {
+        getBinding().rvPlace.addItemDecoration(
+            DividerItemDecoration(
+                getBinding().rvPlace.context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
+
+        getBinding().rvPlace.setUpRecyclerView(
+            R.layout.row_place_list,
+            list as ArrayList<Places>
+        ) { item: Places, binder: RowPlaceListBinding, position ->
+            binder.place = item
+            binder.executePendingBindings()
+        }
     }
 
 

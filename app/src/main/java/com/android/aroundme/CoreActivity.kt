@@ -38,7 +38,7 @@ abstract class CoreActivity< DB : ViewDataBinding> : AppCompatActivity() {
     }
 
 
-    protected fun requestPermissionsIfRequired(permissions: ArrayList<String>, permissionCallBack: PermissionCallBack?) {
+   /* protected fun requestPermissionsIfRequired(permissions: ArrayList<String>, permissionCallBack: PermissionCallBack?) {
         this.permissionCallBack = permissionCallBack
         if (checkSelfPermissions(permissions)) {
             permissionCallBack?.permissionGranted()
@@ -62,7 +62,7 @@ abstract class CoreActivity< DB : ViewDataBinding> : AppCompatActivity() {
                 }
             }
         }
-    }
+    }*/
 
 
 }
