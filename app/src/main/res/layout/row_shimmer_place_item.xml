@@ -3,12 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="place"
-            type="com.android.aroundme.data.model.Places" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,15 +10,18 @@
         android:elevation="2dp"
         android:padding="15dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            imgUrl="@{place.photos.get(0).placeImage}"
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivPlace"
             android:layout_width="80dp"
             android:layout_height="80dp"
+            android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
+            android:background="#B3B3B3" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:visibility="invisible"
             android:id="@+id/ivDirection"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,6 +31,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_favourite"
@@ -49,7 +47,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="6dp"
             android:layout_marginEnd="10dp"
-            android:text="@{place.name}"
+            android:background="#B3B3B3"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -61,11 +59,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvRating"
-            android:layout_width="0dp"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="@string/rating"
-            android:textColor="@color/purple_700"
+            android:background="#B3B3B3"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/tvPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/tvPlaceName" />
@@ -78,17 +75,16 @@
             android:layout_marginTop="3dp"
             android:isIndicator="true"
             android:numStars="5"
-            android:rating="@{place.ratings}"
             android:stepSize="0.1"
             app:layout_constraintStart_toStartOf="@+id/tvPlaceName"
             app:layout_constraintTop_toBottomOf="@+id/tvRating" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDistance"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="@{place.geometry.location.getDistance}"
+            android:background="#B3B3B3"
             android:textColor="@color/purple_700"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/tvPlaceName"
@@ -100,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
-            android:text="@{place.vicinity}"
+            android:background="#B3B3B3"
             android:textColor="@color/black"
             android:ellipsize="end"
             android:textSize="14sp"
@@ -111,15 +107,15 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvStatus"
-            android:layout_width="wrap_content"
+            android:background="#B3B3B3"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="@{place.openingHours.open_now ? @string/open_now : @string/closed_now }"
-            android:textColor="@{place.openingHours.open_now ? @color/purple_500 : @color/red }"
-            android:textSize="15sp"
+             android:textSize="15sp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toStartOf="@+id/ivDirection"
             app:layout_constraintStart_toStartOf="@+id/tvAddress"
             app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

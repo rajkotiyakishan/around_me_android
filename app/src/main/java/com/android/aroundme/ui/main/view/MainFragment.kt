@@ -13,12 +13,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.viewModels
+import com.android.aroundme.CoreApp
 import com.android.aroundme.CoreFragment
 import com.android.aroundme.R
 import com.android.aroundme.databinding.FragmentMainBinding
 import com.android.aroundme.ui.main.viewmodel.MainViewModel
 import com.android.aroundme.utils.ktx.PermissionCallBack
 import com.android.aroundme.utils.ktx.confirmationDialog
+import com.android.aroundme.utils.ktx.setLat
+import com.android.aroundme.utils.ktx.setLong
 import com.google.android.gms.location.*
 import dagger.hilt.android.AndroidEntryPoint
 import org.supportcompact.adapters.Page
@@ -42,6 +45,8 @@ class MainFragment : CoreFragment<FragmentMainBinding>() {
             val locationList = locationResult.locations
             if (locationList.isNotEmpty()) {
                 val location = locationList.last()
+                CoreApp.mInstance?.setLat(location.latitude.toString())
+                CoreApp.mInstance?.setLong(location.longitude.toString())
                 getBinding().progressBar.visibility = View.GONE
                 setUpTabLayout(location)
             }

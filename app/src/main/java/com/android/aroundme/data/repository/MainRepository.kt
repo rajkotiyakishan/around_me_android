@@ -6,5 +6,6 @@ import javax.inject.Inject
 class MainRepository @Inject constructor(private val apiHelper: ApiHelper) {
 
     suspend fun getNearbyPlace(location : String) =  apiHelper.getNearbyPlace(location)
+    suspend fun getMapRoute(data: HashMap<String, String>) =  apiHelper.getMapRoute(data)
 
 }

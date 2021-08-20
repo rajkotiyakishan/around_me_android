@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="vm"
             type="com.android.aroundme.ui.main.viewmodel.MainViewModel" />
@@ -10,12 +11,125 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent">
 
-        <TextView
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mapFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Map Fragment" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/clPlace"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clPlace"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:elevation="2dp"
+            android:padding="15dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPlace"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivDirection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_direction"
+                android:tint="@color/purple_700"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_favourite"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/ivDirection"
+                app:layout_constraintStart_toStartOf="@+id/ivDirection"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPlaceName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end"
+                app:layout_constraintEnd_toStartOf="@+id/ivDirection"
+                app:layout_constraintStart_toEndOf="@+id/ivPlace"
+                app:layout_constraintTop_toTopOf="@+id/ivPlace" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvRating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="@string/rating"
+                android:textColor="@color/purple_700"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tvPlaceName"
+                app:layout_constraintTop_toBottomOf="@+id/tvPlaceName" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="0.1"
+                app:layout_constraintStart_toStartOf="@+id/tvPlaceName"
+                app:layout_constraintTop_toBottomOf="@+id/tvRating" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/purple_700"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tvPlaceName"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvAddress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:textColor="@color/black"
+                android:ellipsize="end"
+                android:textSize="14sp"
+                android:maxLines="2"
+                app:layout_constraintEnd_toStartOf="@+id/ivDirection"
+                app:layout_constraintStart_toStartOf="@+id/ivPlace"
+                app:layout_constraintTop_toBottomOf="@+id/tvDistance" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="@+id/tvAddress"
+                app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <ProgressBar
             android:id="@+id/progressBar"

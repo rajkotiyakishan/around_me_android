@@ -1,5 +1,7 @@
 package com.android.aroundme.ui.main.viewmodel
 
+import android.database.Observable
+import androidx.databinding.ObservableField
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.android.aroundme.data.model.Places
@@ -16,8 +18,9 @@ class MainViewModel @Inject constructor(
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
+    val place = ObservableField<Places>()
     private val _places = MutableLiveData<Resource<List<Places>>>()
-    val users: LiveData<Resource<List<Places>>>
+    val places: LiveData<Resource<List<Places>>>
         get() = _places
 
 

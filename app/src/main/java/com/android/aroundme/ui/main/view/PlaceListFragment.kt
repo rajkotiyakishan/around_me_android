@@ -2,8 +2,10 @@ package com.android.aroundme.ui.main.view
 
 import android.view.View
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.android.aroundme.CoreFragment
 import com.android.aroundme.R
@@ -35,36 +37,37 @@ class PlaceListFragment : CoreFragment<FragmentPlaceListBinding>() {
         parentFragment?.let {
             mainViewModel =
                 ViewModelProvider(it).get(MainViewModel::class.java)
-
         }
         setupObserver()
 
     }
 
     private fun setupObserver() {
-        mainViewModel?.users?.observe(this, Observer {
+        mainViewModel?.places?.observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    getBinding().progressBar.visibility = View.GONE
+                    getBinding().shimmerLayout.stopShimmer()
+                    getBinding().shimmerLayout.visibility = View.GONE
                     it.data?.let { list ->
                         setPlaceList(list)
                     }
 
                 }
                 Status.LOADING -> {
-                    getBinding().progressBar.visibility = View.VISIBLE
-
+                    getBinding().shimmerLayout.visibility = View.VISIBLE
+                    getBinding().shimmerLayout.startShimmer()
                 }
                 Status.ERROR -> {
-                    getBinding().progressBar.visibility = View.GONE
+                    getBinding().shimmerLayout.stopShimmer()
+                    getBinding().shimmerLayout.visibility = View.GONE
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
-
                 }
             }
         })
     }
 
     private fun setPlaceList(list: List<Places>) {
+        getBinding().rvPlace.visibility = View.VISIBLE
         getBinding().rvPlace.addItemDecoration(
             DividerItemDecoration(
                 getBinding().rvPlace.context,
@@ -78,6 +81,13 @@ class PlaceListFragment : CoreFragment<FragmentPlaceListBinding>() {
         ) { item: Places, binder: RowPlaceListBinding, position ->
             binder.place = item
             binder.executePendingBindings()
+
+            binder.ivDirection.setOnClickListener {
+                findNavController().navigate(
+                    R.id.placeDirectionFragment,
+                    bundleOf("place" to item)
+                )
+            }
         }
     }
 
