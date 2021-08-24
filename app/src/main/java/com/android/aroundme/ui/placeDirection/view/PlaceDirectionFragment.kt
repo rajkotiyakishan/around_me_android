@@ -24,10 +24,7 @@ import com.android.aroundme.ui.main.view.MainActivity
 import com.android.aroundme.ui.main.viewmodel.MainViewModel
 import com.android.aroundme.ui.placeDirection.viewmodel.PlaceDirectionVM
 import com.android.aroundme.utils.Status
-import com.android.aroundme.utils.ktx.decodePoly
-import com.android.aroundme.utils.ktx.getLat
-import com.android.aroundme.utils.ktx.getLong
-import com.android.aroundme.utils.ktx.positionCamera
+import com.android.aroundme.utils.ktx.*
 import com.bumptech.glide.Glide
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -84,7 +81,7 @@ class PlaceDirectionFragment : CoreFragment<FragmentPlaceDirectionBinding>() {
 
 
     private fun setupObserver() {
-        placeDirectionVM?.route?.observe(this, Observer {
+        placeDirectionVM.route.observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
                     getBinding().progressBar.visibility = View.GONE
@@ -99,35 +96,34 @@ class PlaceDirectionFragment : CoreFragment<FragmentPlaceDirectionBinding>() {
                 }
                 Status.ERROR -> {
                     getBinding().progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                    getBinding().mainCl.snackBar(it.message!!)
                 }
             }
         })
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            PlaceDirectionFragment().apply {
 
-            }
-    }
 
     private fun setCurrentPlace(place: Places) {
         getBinding().tvPlaceName.text = place.name
         getBinding().tvAddress.text = place.vicinity
         getBinding().ratingBar.rating = place.ratings
         getBinding().tvDistance.text = place.geometry.location.getDistance
-        getBinding().tvStatus.text =
-            if (place.openingHours.open_now) requireContext().getText(R.string.open_now) else requireContext().getText(
-                R.string.closed_now
+
+        place.openingHours?.let {
+            getBinding().tvStatus.text =
+                if (it.isOpenNow) requireContext().getText(R.string.open_now) else requireContext().getText(
+                    R.string.closed_now
+                )
+
+            getBinding().tvStatus.setTextColor(
+                if (it.isOpenNow) ContextCompat.getColor(
+                    requireContext(),
+                    R.color.purple_500
+                ) else ContextCompat.getColor(requireContext(), R.color.red)
             )
-        getBinding().tvStatus.setTextColor(
-            if (place.openingHours.open_now) ContextCompat.getColor(
-                requireContext(),
-                R.color.purple_500
-            ) else ContextCompat.getColor(requireContext(), R.color.red)
-        )
+        }
+
         place.photos?.get(0)?.placeImage?.let {
             Glide.with(requireContext()).load(it).circleCrop().into(getBinding().ivPlace)
         }
@@ -162,16 +158,14 @@ class PlaceDirectionFragment : CoreFragment<FragmentPlaceDirectionBinding>() {
                             path.add(hm)
                         }
                     }
-                    arrayRoutes.add(path);
+                    arrayRoutes.add(path)
                 }
             }
         }
-
-        addPath(directionArray)
+        addPath()
     }
 
-    private fun addPath(directionArray: GoogleMapDirection) {
-
+    private fun addPath() {
         for (routs in arrayRoutes) {
             lineOptions = PolylineOptions()
             for (path in routs) {
@@ -194,16 +188,20 @@ class PlaceDirectionFragment : CoreFragment<FragmentPlaceDirectionBinding>() {
             mMap?.positionCamera(
                 bounds,
                 (childFragmentManager.findFragmentById(R.id.mapFragment) as SupportMapFragment).view?.width?.div(
-                    10
-                ) ?: 10,
+                    5
+                ) ?: 5,
                 true
             )
 
-        } else {
-            Log.d("onPostExecute", "without Polylines drawn");
         }
+    }
 
+    companion object {
+        @JvmStatic
+        fun newInstance() =
+            PlaceDirectionFragment().apply {
 
+            }
     }
 
 }

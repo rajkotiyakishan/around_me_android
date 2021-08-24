@@ -5,12 +5,15 @@ import androidx.databinding.ObservableField
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.android.aroundme.BuildConfig
+import com.android.aroundme.CoreApp
+import com.android.aroundme.R
 import com.android.aroundme.data.model.GoogleMapDirection
 import com.android.aroundme.data.model.Places
 import com.android.aroundme.data.repository.MainRepository
 import com.android.aroundme.utils.NetworkHelper
 import com.android.aroundme.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,7 +49,7 @@ class PlaceDirectionVM @Inject constructor(
                         _route.postValue(Resource.success(it.body()))
                     } else _route.postValue(Resource.error(it.errorBody().toString(), null))
                 }
-            } else _route.postValue(Resource.error("No internet connection", null))
+            } else _route.postValue(Resource.error(CoreApp.mInstance!!.resources.getString(R.string.no_internet), null))
         }
     }
 }

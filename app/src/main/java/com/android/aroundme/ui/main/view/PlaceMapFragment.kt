@@ -103,19 +103,17 @@ class PlaceMapFragment : CoreFragment<FragmentPlaceMapBinding>() {
         mainViewModel?.places?.observe(this, Observer {
             when (it.status) {
                 Status.SUCCESS -> {
-                    getBinding().progressBar.visibility = View.GONE
                     it.data?.let { list ->
                         setMap(list as ArrayList<Places>)
                     }
 
                 }
                 Status.LOADING -> {
-                    getBinding().progressBar.visibility = View.VISIBLE
+
 
                 }
                 Status.ERROR -> {
-                    getBinding().progressBar.visibility = View.GONE
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+
                 }
             }
         })
@@ -126,16 +124,21 @@ class PlaceMapFragment : CoreFragment<FragmentPlaceMapBinding>() {
         getBinding().tvAddress.text = place.vicinity
         getBinding().ratingBar.rating = place.ratings
         getBinding().tvDistance.text = place.geometry.location.getDistance
-        getBinding().tvStatus.text =
-            if (place.openingHours.open_now) requireContext().getText(R.string.open_now) else requireContext().getText(
-                R.string.closed_now
+        place.openingHours?.let {
+            getBinding().tvStatus.text =
+                if (it.isOpenNow) requireContext().getText(R.string.open_now) else requireContext().getText(
+                    R.string.closed_now
+                )
+
+            getBinding().tvStatus.setTextColor(
+                if (it.isOpenNow) ContextCompat.getColor(
+                    requireContext(),
+                    R.color.purple_500
+                ) else ContextCompat.getColor(requireContext(), R.color.red)
             )
-        getBinding().tvStatus.setTextColor(
-            if (place.openingHours.open_now) ContextCompat.getColor(
-                requireContext(),
-                R.color.purple_500
-            ) else ContextCompat.getColor(requireContext(), R.color.red)
-        )
+        }
+
+
         place.photos?.get(0)?.placeImage?.let {
             Glide.with(requireContext()).load(it).circleCrop().into(getBinding().ivPlace)
         }

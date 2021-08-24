@@ -124,6 +124,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:textSize="15sp"
+                android:text="@string/closed_now"
+                android:textColor="@color/red"
                 app:layout_constraintStart_toStartOf="@+id/tvAddress"
                 app:layout_constraintTop_toBottomOf="@+id/tvAddress" />
 
@@ -131,16 +133,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/purple_700"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

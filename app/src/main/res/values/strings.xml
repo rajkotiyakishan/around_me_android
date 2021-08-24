@@ -9,11 +9,13 @@
     <string name="ok">Ok</string>
     <string name="dont_allow">Don\'t Allow</string>
     <string name="allow">Allow</string>
-    <string name="read_location">Please Allow Location Permission</string>
+    <string name="read_location">We need your location to get near by places, please allow location permission request</string>
     <string name="settings">Setting</string>
     <string name="cancel">Cancel</string>
     <string name="open_now">Open Now</string>
     <string name="closed_now">Closed Now</string>
     <string name="rating">Rating</string>
     <string name="mapApiKey">AIzaSyDbPkKDfVX8qUoyn7NR57fhuQhspM6LIjs</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="no_restaurant">No Restaurants Found</string>
 </resources>

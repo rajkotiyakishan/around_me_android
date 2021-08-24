@@ -70,6 +70,8 @@ class MainFragment : CoreFragment<FragmentMainBinding>() {
     }
 
     private fun setUpTabLayout(location: Location) {
+
+        // add pages in viewpager
         val pages = arrayListOf(
             Page("", PlaceListFragment.newInstance()),
             Page("", PlaceMapFragment.newInstance())
@@ -78,11 +80,15 @@ class MainFragment : CoreFragment<FragmentMainBinding>() {
         getBinding().mPager.isNestedScrollingEnabled = false
         getBinding().mPager.offscreenPageLimit = 1
         getBinding().mPager.setFragmentPagerAdapter(childFragmentManager, pages)
+
+        // set viewpager in tabLayout
         getBinding().mTab.setupWithViewPager(getBinding().mPager, true)
 
         getBinding().mTab.getTabAt(0)?.setIcon(R.drawable.ic_list)
         getBinding().mTab.getTabAt(1)?.setIcon(R.drawable.ic_map)
 
+
+        // calling api to get place
         mainViewModel.fetchPlaces(
             (location.latitude.toString().plus(",").plus(location.longitude.toString()))
         )
@@ -107,6 +113,7 @@ class MainFragment : CoreFragment<FragmentMainBinding>() {
                     getCurrentLocation()
                 } else {
                     getBinding().progressBar.visibility = View.VISIBLE
+                    // start location update request
                     fusedLocationProvider?.requestLocationUpdates(
                         locationRequest,
                         locationCallback,

@@ -3,13 +3,15 @@ package com.android.aroundme.utils.ktx
 import android.app.Activity
 import android.content.Context
 import android.content.DialogInterface
+import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.android.aroundme.R
+import com.google.android.material.snackbar.Snackbar
 
 fun Context.simpleAlert(msg: String, positiveButton: (() -> Unit)? = null) {
-    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this)
+    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this ,R.style.AlertDialogTheme)
     mDialog.setTitle(getString(R.string.app_name))
             .setMessage(msg)
             .setPositiveButton(getString(R.string.ok)) { _: DialogInterface, _: Int ->
@@ -20,7 +22,7 @@ fun Context.simpleAlert(msg: String, positiveButton: (() -> Unit)? = null) {
 
 fun Context.simpleAlert(title: String, msg: String, positiveButton: (() -> Unit)? = null) {
 
-    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this)
+    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
     mDialog.setTitle(title)
             .setMessage(msg)
             .setPositiveButton(getString(R.string.ok)) { _: DialogInterface, _: Int ->
@@ -31,7 +33,7 @@ fun Context.simpleAlert(title: String, msg: String, positiveButton: (() -> Unit)
 
 fun Context.simpleAlert(title: String, msg: String, btnTitle: String, positiveButton: (() -> Unit)? = null) {
 
-    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this)
+    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
     mDialog.setTitle(title)
             .setMessage(msg)
             .setPositiveButton(getString(R.string.ok)) { _: DialogInterface, _: Int ->
@@ -44,7 +46,7 @@ fun Context.simpleAlert(title: String, msg: String, btnTitle: String, positiveBu
 
 fun Context.confirmationDialog(msg: String, btnPositiveClick: (() -> Unit)? = null, btnNegativeClick: (() -> Unit)? = null) {
     if ((this as Activity).isFinishing) return
-    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this)
+    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
     mDialog.setTitle(getString(R.string.app_name))
             .setMessage(msg)
             .setPositiveButton(getString(R.string.no)) { _, which -> btnNegativeClick?.invoke() }
@@ -53,7 +55,7 @@ fun Context.confirmationDialog(msg: String, btnPositiveClick: (() -> Unit)? = nu
 }
 
 fun Context.confirmationDialog(title: String, msg: String, btnPositiveClick: (() -> Unit)? = null, btnNegativeClick: (() -> Unit)? = null) {
-    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this)
+    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
     mDialog.setTitle(title)
             .setMessage(msg)
             .setPositiveButton(getString(R.string.no)) { _, which -> btnNegativeClick?.invoke() }
@@ -63,7 +65,7 @@ fun Context.confirmationDialog(title: String, msg: String, btnPositiveClick: (()
 
 fun Context.confirmationDialog(title: String, msg: String, btnPositive: String, btnNegative: String, btnPositiveClick: (() -> Unit)? = null, btnNegativeClick: (() -> Unit)? = null) {
     if ((this as Activity).isFinishing) return
-    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this)
+    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
     mDialog.setTitle(title)
             .setMessage(msg)
             .setPositiveButton(getString(R.string.no)) { _, which -> btnNegativeClick?.invoke() }
@@ -74,7 +76,7 @@ fun Context.confirmationDialog(title: String, msg: String, btnPositive: String, 
 
 
 fun Context.showListDialog(title: String?, list: ArrayList<String>, onItemSelected: ((item: String) -> Unit)? = null) {
-    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this)
+    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
     val data = list.toTypedArray()
     mDialog.setTitle(title)
             .setItems(data) { dialogInterface, which ->
@@ -86,7 +88,7 @@ fun Context.showListDialog(title: String?, list: ArrayList<String>, onItemSelect
 
 
 fun <T> Context.showCustomListDialog(title: String?, list: ArrayList<T>, onItemSelected: ((item: T) -> Unit)? = null) {
-    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this)
+    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
     val data: Array<String?> = arrayOfNulls(list.size)
     list.forEachIndexed { index, t -> data[index] = t.toString() }
     mDialog.setTitle(title)
@@ -98,7 +100,7 @@ fun <T> Context.showCustomListDialog(title: String?, list: ArrayList<T>, onItemS
 }
 
 fun <T> Context.showCustomListDialog(@StringRes title: Int, list: ArrayList<T>, onItemSelected: ((item: T) -> Unit)? = null) {
-    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this)
+    val mDialog: AlertDialog.Builder = AlertDialog.Builder(this, R.style.AlertDialogTheme)
     val data: Array<String?> = arrayOfNulls(list.size)
     list.forEachIndexed { index, t -> data[index] = t.toString() }
     mDialog.setTitle(title)
@@ -108,3 +110,5 @@ fun <T> Context.showCustomListDialog(@StringRes title: Int, list: ArrayList<T>, 
             }
             .create().show()
 }
+
+fun View.snackBar(message : String, duration : Int = com.google.android.material.snackbar.Snackbar.LENGTH_SHORT) = Snackbar.make(this,message,duration).show()

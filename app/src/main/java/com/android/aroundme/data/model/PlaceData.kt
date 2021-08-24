@@ -44,17 +44,17 @@ data class Places(
     var place_id: String,
 
     @SerializedName("opening_hours")
-    var openingHours: OpeningHours,
+    var openingHours: OpeningHours?,
 
     @SerializedName("rating")
-    var rating: String,
+    var rating: String?,
 
     @SerializedName("vicinity")
     var vicinity: String
 
 ): Parcelable {
     val ratings: Float
-        get() = rating.toFloat()
+        get() = if(rating == null) 0.0f else rating!!.toFloat()
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -126,8 +126,11 @@ data class Locations(
 
 data class OpeningHours(
     @SerializedName("open_now")
-    var open_now: Boolean
-)
+    var is_open: Boolean?
+){
+    val isOpenNow : Boolean
+    get() = if(is_open != null) is_open!! else false
+}
 
 data class Photos(
     @SerializedName("photo_reference")
